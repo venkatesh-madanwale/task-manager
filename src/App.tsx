@@ -2,6 +2,8 @@
 // This application allows users to add tasks, which are stored in local storage.
 import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { Task } from "./types/task";
+import AddButton from "./components/AddButton";
+import TaskList from "./components/TaskList";
 function App() {// React component
     // State to manage tasks and input
     const [tasks, setTasks] = useState<Task[]>([])
@@ -51,13 +53,28 @@ function App() {// React component
     return (// JSX to render the task manager UI
         <div>
             <h1>Task Manager</h1>
-            <input value={input} onChange={(e) => setInput(e.target.value)} />
             {/* Input field to enter new tasks */}
-            <button onClick={addTask}>Add</button>
+            {/* <input value={input} onChange={(e) => setInput(e.target.value)} /> */}
+            <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Enter a Task"/>
+
+
+
             {/* Button to add the task */}
-            <ul>
-                {tasks.map(task => (<li key={task.id}>{task.task}</li>))}{/* List of tasks */}
-            </ul>
+            {/* <button onClick={addTask}>Add</button> */}
+            <AddButton onClick={addTask} label="Add Task" />
+
+
+
+            {/* List of tasks */}            
+            {/* <ul>
+                {tasks.map(task => (<li key={task.id}>{task.task}</li>))}
+            </ul> */}
+
+            <TaskList tasks={tasks} />
+
         </div>
     )
 }

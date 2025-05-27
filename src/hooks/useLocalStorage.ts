@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 // key: localStorage key to read or write
 // initial value: fallback value if the localStorage is no value or mal-found
 
-export function useLocalStorage<T>(key:string, initialValue: T){
+export function useLocalStorage<T>(key: string, initialValue: T) {
     // Uses lazy initialization with a function to avoid running the logic on every re-render
     // It prevents errors during server side rendering
-    
-    const [storedValue, setStoredValue] = useState<T>(()=>{
-        if (typeof window === 'undefined'){
+
+    const [storedValue, setStoredValue] = useState<T>(() => {
+        if (typeof window === 'undefined') {
             return initialValue
         }
         // Tries to read the value based on key "the key is always string", the item can be of any type
@@ -17,19 +17,19 @@ export function useLocalStorage<T>(key:string, initialValue: T){
         // Else the initial value will be send.
         try {
             const item = window.localStorage.getItem(key)
-            return item?(JSON.parse(item) as T): initialValue
+            return item ? (JSON.parse(item) as T) : initialValue
         } catch (error) {
-            console.warn(`error reading localStorage ${key}`,error)
+            console.warn(`error reading localStorage ${key}`, error)
             return initialValue
         }
     })
-    useEffect(()=>{
+    useEffect(() => {
         try {
-            window.localStorage.setItem(key,JSON.stringify(storedValue))
+            window.localStorage.setItem(key, JSON.stringify(storedValue))
         } catch (error) {
-            console.warn(`Error setting the localStorage for ${key}`,error)
+            console.warn(`Error setting the localStorage for ${key}`, error)
         }
-    },[key,storedValue])
+    }, [key, storedValue])
 
-    return [storedValue,setStoredValue] as const
+    return [storedValue, setStoredValue] as const
 }

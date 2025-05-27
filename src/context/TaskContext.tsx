@@ -1,6 +1,7 @@
-import React, { createContext, useReducer, Dispatch, ReactNode } from "react";
+import React, { createContext, useReducer, Dispatch, ReactNode, useEffect } from "react";
 import { Task } from "../types/task";
 import { taskReducer, TaskAction } from "../reducers/taskReducer";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 
 // Create context to create a shared global state, coming from ContextAPI
@@ -21,7 +22,19 @@ interface TaskContextType {
 
 export const TaskContext = createContext<TaskContextType | undefined>(undefined)
 export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [tasks, dispatch] = useReducer(taskReducer, [])
+    
+    // Used the useLocalStorage to get the local storage and also to set the local store
+    // if the tasks exist [{task1},{task2}...]
+    // else empty array
+    const [storedTasks,setStoredTask] = useLocalStorage<Task[]>('tasks',[])
+    // assigning tasks with stored task under local storage
+    const [tasks, dispatch] = useReducer(taskReducer, storedTasks)
+    
+    // if task gets updated running the side effect to store the task into local storage
+    useEffect(()=>{
+        setStoredTask(tasks)
+    },[tasks])
+
     return (
         <TaskContext.Provider value={{ tasks, dispatch }}>{children}</TaskContext.Provider>
     )

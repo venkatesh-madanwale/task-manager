@@ -33,10 +33,16 @@ const App: React.FC = ()=> {// React component
 
     // useEffect() for update
     // It saves the tasks to local storage whenever the tasks state changes.
+    
+    
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks))
     }, [tasks])
 
+
+
+
+    
     //useLayoutEffect() for scroll of DOM
     // It scrolls to the bottom of the task list whenever a new task is added.
     const listEndRef = useRef<HTMLDivElement | null>(null)

@@ -23,14 +23,11 @@ interface TaskContextType {
 export const TaskContext = createContext<TaskContextType | undefined>(undefined)
 export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     
-    // Used the useLocalStorage to get the local storage and also to set the local store
-    // if the tasks exist [{task1},{task2}...]
-    // else empty array
+    // Used the useLocalStorage to get the locally
     const [storedTasks,setStoredTask] = useLocalStorage<Task[]>('tasks',[])
-    // assigning tasks with stored task under local storage
+
     const [tasks, dispatch] = useReducer(taskReducer, storedTasks)
     
-    // if task gets updated running the side effect to store the task into local storage
     useEffect(()=>{
         setStoredTask(tasks)
     },[tasks])

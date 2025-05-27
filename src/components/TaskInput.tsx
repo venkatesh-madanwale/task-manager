@@ -15,12 +15,12 @@ const TaskInput: React.FC = () => {
     // We are trying to restict the unnescessary rendering of the child
     // Just the dependencies are considered
 
-    const handleAdd = useCallback(() => {
+    const handleAdd = () => {
         if (input.trim()) {
             dispatch({ type: 'ADD', payload: input })
             setInput("")
         }
-    }, [input, dispatch])
+    }
 
 
     return (

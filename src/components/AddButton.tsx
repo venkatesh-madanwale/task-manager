@@ -3,14 +3,12 @@ import React from "react";
 type AddButtonProps = {
   onClick: () => void;
   label : string;
-};
+}
 
-const AddButton: React.FC<AddButtonProps> = ({ onClick, label}) => {
+const AddButton: React.FC<AddButtonProps> = ({label, ...props}) => {
   return (
-    <button onClick={onClick} className="task-add-btn">
-      {label}
-    </button>
-  );
-};
+    <button {...props}>{label}</button> 
+  )
+}
 
-export default AddButton;
+export default AddButton

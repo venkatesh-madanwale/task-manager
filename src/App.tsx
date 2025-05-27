@@ -4,7 +4,10 @@ import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { Task } from "./types/task";
 import AddButton from "./components/AddButton";
 import TaskList from "./components/TaskList";
-function App() {// React component
+import { useLocalStorage } from "./hooks/useLocalStorage";
+
+
+const App: React.FC = ()=> {// React component
     // State to manage tasks and input
     const [tasks, setTasks] = useState<Task[]>([])
     const [input, setInput] = useState('')

@@ -82,7 +82,7 @@ const App: React.FC = ()=> {// React component
                 {tasks.map(task => (<li key={task.id}>{task.task}</li>))}
             </ul> */}
 
-            <TaskList tasks={tasks} />
+            <TaskList/>
 
         </div>
     )
